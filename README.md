@@ -1,109 +1,87 @@
 # Food Delivery Platform
 
-A local-first food-delivery demo built as a microservice system with Java 21, Spring Boot, Spring Cloud, WebClient, JWT, PostgreSQL, OpenAPI/Swagger and React.
+A Java 21 + Spring Boot microservices food-delivery application with a React UI and PostgreSQL test data.
 
-## Repository structure
+## Repository layout
 
-- `services/` — independently deployable Spring Boot services.
-- `frontend/` — React/Vite web application.
-- `legacy/monolith/` — original monolith retained for migration/reference only.
-- `docs/` — architecture and project documentation.
-- `docker-compose.yml` — local PostgreSQL infrastructure.
-- Root `pom.xml` — Maven aggregator for all active backend services.
+```text
+food-delivery-app/
+├── food-delivery-backend/
+│   ├── discovery-server/
+│   ├── api-gateway/
+│   ├── auth-service/
+│   ├── restaurant-service/
+│   └── order-service/
+├── food-delivery-ui/
+│   ├── src/
+│   ├── package.json
+│   └── index.html
+├── db/
+│   └── sample-data.sql
+├── docs/
+├── docker-compose.yml
+├── RUNBOOK.md
+└── README.md
+```
 
-## Architecture
+The old monolith is kept under `legacy/monolith/` only for migration/reference.
 
-- Discovery Server (Eureka): 8761
-- API Gateway (Spring Cloud Gateway): 8080
+## Backend
+
+- Eureka Service Discovery: 8761
+- API Gateway: 8080
 - Auth Service: 8081
 - Restaurant Service: 8082
 - Order Service: 8083
-- PostgreSQL: 5432
-- React UI: 5173
+- WebClient + Eureka LoadBalancer for service-to-service calls
+- Resilience4j circuit breaker
+- JWT authentication
+- OpenAPI/Swagger
+- PostgreSQL
+- Actuator
 
-Browser -> API Gateway -> Auth / Restaurant / Order  
-Order Service -> WebClient -> Restaurant Service
+## UI
 
-## Prerequisites
+React + Vite runs on port 5173.
 
-JDK 21, Maven 3.9+, Node.js 20+, Docker Desktop/Engine.
+## Database test data
 
-Check:
-`java -version`  
-`mvn -version`  
-`node -v`  
-`docker --version`
+After PostgreSQL and the services have created their JPA tables, apply:
 
-## Run locally
+```bash
+psql -h localhost -U fooddelivery -d fooddelivery -f db/sample-data.sql
+```
 
-Start PostgreSQL:
+The script contains related users, restaurants, menu items and orders with stable IDs. Cross-service relationships are represented by business identifiers rather than database foreign keys because the microservices own their data independently.
+
+All seeded users use the password `password`.
+
+## Run
+
+Prerequisites: JDK 21, Maven 3.9+, Node.js 20+, Docker.
 
 ```bash
 docker compose up -d postgres
 ```
 
-Start all backend services from the repository root in separate terminals:
+From the repository root, start each backend service in a separate terminal:
 
 ```bash
-mvn -pl services/discovery-server spring-boot:run
-mvn -pl services/auth-service spring-boot:run
-mvn -pl services/restaurant-service spring-boot:run
-mvn -pl services/order-service spring-boot:run
-mvn -pl services/api-gateway spring-boot:run
+mvn -f food-delivery-backend/pom.xml -pl discovery-server -am spring-boot:run
+mvn -f food-delivery-backend/pom.xml -pl auth-service -am spring-boot:run
+mvn -f food-delivery-backend/pom.xml -pl restaurant-service -am spring-boot:run
+mvn -f food-delivery-backend/pom.xml -pl order-service -am spring-boot:run
+mvn -f food-delivery-backend/pom.xml -pl api-gateway -am spring-boot:run
 ```
 
-Or enter a service directory and run `mvn spring-boot:run`.
-
-Start the UI:
+Start UI:
 
 ```bash
-cd frontend
+cd food-delivery-ui
 npm install
 npm run dev
 ```
 
-Open **http://localhost:5173**.
+Open http://localhost:5173.
 
-## Service URLs
-
-- Eureka: http://localhost:8761
-- Gateway: http://localhost:8080
-- Auth Swagger: http://localhost:8081/swagger-ui.html
-- Restaurant Swagger: http://localhost:8082/swagger-ui.html
-- Order Swagger: http://localhost:8083/swagger-ui.html
-- Actuator: `/actuator/health` on each service
-
-## Demo account
-
-The restaurant owner is seeded as:
-- owner@demo.com
-- password
-
-Create a customer account through the UI.
-
-## What this demonstrates
-
-- Service discovery with Eureka
-- API Gateway routing
-- JWT authentication
-- Stateless Spring Security
-- Service-to-service calls with Spring WebClient
-- Load-balanced service discovery
-- Circuit-breaker/fault-tolerance boundary
-- PostgreSQL/JPA
-- OpenAPI + Swagger UI
-- Spring Boot Actuator
-- React/Vite frontend
-- Dockerized local infrastructure
-
-Payments are demo-only; no real card/UPI data is collected.
-
-## Build
-
-Build all active backend services from the root:
-
-```bash
-mvn clean package
-```
-
-The services remain independently deployable. The legacy monolith is intentionally excluded from the root build.
+See `RUNBOOK.md` for the complete flow and troubleshooting.
