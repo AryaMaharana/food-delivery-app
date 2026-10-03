@@ -43,11 +43,32 @@ See docs/ADDING-MODULE.md for the exact convention.
 After PostgreSQL and the services have created their JPA tables, apply db/sample-data.sql.
 All seeded users use the password password in the intended local test dataset.
 
-## Run
-Prerequisites: JDK 21, Maven 3.9+, Node.js 20+, Docker.
-Start PostgreSQL with: docker compose up -d postgres
-Then start discovery-server, auth-service, restaurant-service, order-service and api-gateway from food-delivery-backend using the Maven commands documented in RUNBOOK.md.
-Start the UI with npm install && npm run dev from food-delivery-ui.
-Open http://localhost:5173.
+## Run locally with Docker
+
+Prerequisite: Docker Desktop with Docker Compose.
+
+Start the complete ZAAYKA stack from the repository root:
+
+    docker compose up --build
+
+This starts PostgreSQL, Eureka Discovery, Auth, Restaurant, Order, API Gateway and the React UI. The first startup also creates the JPA tables and loads the local sample restaurant/menu/order data.
+
+Open the UI at http://localhost:5173.
+Eureka is available at http://localhost:8761.
+The API Gateway is available at http://localhost:8080.
+
+To stop the stack:
+
+    docker compose down
+
+To stop it and remove the local PostgreSQL volume/data:
+
+    docker compose down -v
+
+### Run without Docker
+
+Prerequisites: JDK 21, Maven 3.9+, Node.js 20+ and PostgreSQL.
+
+Start PostgreSQL first, then start discovery-server, auth-service, restaurant-service, order-service and api-gateway from food-delivery-backend using the Maven commands documented in RUNBOOK.md. Start the UI with npm install && npm run dev from food-delivery-ui.
 
 See RUNBOOK.md for troubleshooting.
