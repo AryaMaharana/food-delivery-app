@@ -13,7 +13,7 @@ export default function Navbar() {
 
   return (
     <nav>
-      <Link className="brand zaaykaBrand" to="/">ZAAYKA</Link>
+      <Link className="brand zaaykaBrand" to="/" aria-label="ZAAYKA">ZAAYKA</Link>
       <div className="navlinks">
         {items.map(item => <Link key={item.serviceId} to={item.route}>{item.label}</Link>)}
         {user ? (
