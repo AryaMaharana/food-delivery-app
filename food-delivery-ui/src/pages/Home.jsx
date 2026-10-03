@@ -63,6 +63,7 @@ export default function Home(){
             <div className="foodCategoryLabel"><span>Today's craving</span><b>{heroFoods[heroFood].name}</b></div>
           </div>
         </div>
+        <div className="chefBadge"><span className="chefAvatar">👨‍🍳</span><div><b>Made with love</b><small>by our local chefs</small></div></div>
         <div className="foodDots" aria-label="Food categories">{heroFoods.map((food,i)=><button key={food.name} className={i===heroFood?'active':''} onClick={()=>setHeroFood(i)} aria-label={`Show ${food.name}`}></button>)}</div>
         <div className="floatingCard ratingCard"><span>★</span><div><b>4.9</b><small>loved today</small></div></div>
         <div className="floatingCard deliveryCard"><span>⚡</span><div><b>25 min</b><small>at your door</small></div></div>
