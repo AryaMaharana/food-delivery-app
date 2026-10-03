@@ -1,0 +1,2 @@
+package com.fooddelivery.model; import jakarta.persistence.*; import lombok.*; import java.math.BigDecimal;
+@Entity @Getter @Setter @NoArgsConstructor public class OrderItem { @Id @GeneratedValue(strategy=GenerationType.IDENTITY) Long id; @ManyToOne Order order; @ManyToOne MenuItem menuItem; int quantity; BigDecimal price; }
