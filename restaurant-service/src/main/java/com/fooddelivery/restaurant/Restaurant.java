@@ -1,0 +1,1 @@
+package com.fooddelivery.restaurant; import jakarta.persistence.*; import lombok.*; @Entity @Getter @Setter @NoArgsConstructor public class Restaurant{@Id @GeneratedValue(strategy=GenerationType.IDENTITY) Long id; String name; String description; String address; String phoneNumber; String imageUrl;}
