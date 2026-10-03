@@ -45,11 +45,17 @@ export default function Home(){
         <div className="plateRing ring-one"></div>
         <div className="plateRing ring-two"></div>
         <div className="heroPlate">
-          <div className="plateInner">🍛</div>
+          <div className="plateInner">
+            <img src="https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?auto=format&fit=crop&fm=jpg&q=82&w=1000" alt="Fresh chicken biryani" />
+          </div>
         </div>
         <div className="floatingCard ratingCard"><span>★</span><div><b>4.9</b><small>loved today</small></div></div>
         <div className="floatingCard deliveryCard"><span>⚡</span><div><b>25 min</b><small>at your door</small></div></div>
         <div className="floatingCard freshCard"><span>🔥</span><div><b>Fresh picks</b><small>near you</small></div></div>
+        <div className="greenFoodCard">
+          <img src="https://images.unsplash.com/photo-1505576733088-f8a0f2f4b8a7?auto=format&fit=crop&fm=jpg&q=82&w=600" alt="Fresh green salad" />
+          <div><b>Fresh & green</b><small>healthy favourites</small></div>
+        </div>
       </div>
       <div className="heroMarquee"><div><span>FRESHLY MADE</span><i>✦</i><span>LOCAL FAVOURITES</span><i>✦</i><span>FAST DELIVERY</span><i>✦</i><span>FRESHLY MADE</span><i>✦</i><span>LOCAL FAVOURITES</span><i>✦</i></div></div>
     </section>
