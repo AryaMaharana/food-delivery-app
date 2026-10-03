@@ -132,3 +132,52 @@ nav{height:76px;background:rgba(255,248,237,.76);backdrop-filter:blur(20px);-web
 .chefSpark{position:absolute;font-size:13px;color:#ff5938;text-shadow:0 4px 10px rgba(255,89,56,.3)}.chefSparkOne{top:1px;right:3px;animation:sparkFloat 2.5s ease-in-out infinite}.chefSparkTwo{bottom:12px;left:2px;color:#795cff;animation:sparkFloat 2.8s -1.2s ease-in-out infinite}
 @keyframes chef3dFloat{0%,100%{transform:translate3d(0,0,0) rotate(-3deg)}50%{transform:translate3d(8px,-12px,18px) rotate(4deg)}}@keyframes chefOrbitSpin{to{transform:rotateX(67deg) rotateZ(342deg)}}@keyframes chefOrbitSpinReverse{to{transform:rotateX(67deg) rotateZ(-315deg)}}@keyframes sparkFloat{50%{transform:translateY(-7px) scale(1.15);opacity:.65}}
 @media(max-width:850px){.heroChef3d{left:-1%;bottom:5%;transform:scale(.9)}}@media(max-width:600px){.zaaykaBrand{font-size:27px;letter-spacing:2px}.heroChef3d{left:-4%;bottom:4%;transform:scale(.72)}}
+
+/* ZAAYKA brand refresh: high-contrast, simple food-delivery wordmark */
+.zaaykaBrand{
+  position:relative;
+  display:inline-block;
+  font-family:'DM Sans',system-ui,sans-serif;
+  font-size:29px;
+  line-height:1;
+  font-weight:900;
+  letter-spacing:-1.8px;
+  color:#24150f;
+  background:none;
+  -webkit-text-fill-color:initial;
+  text-shadow:none;
+  transform:none;
+  filter:none;
+  padding:4px 0 7px;
+}
+.zaaykaBrand:before{
+  content:'';
+  position:absolute;
+  left:1px;
+  right:4px;
+  bottom:0;
+  height:4px;
+  border-radius:99px;
+  background:#ff5938;
+  transform:skewX(-12deg);
+  opacity:1;
+}
+.zaaykaBrand:after{
+  content:'✦';
+  position:absolute;
+  right:-14px;
+  top:-9px;
+  color:#ff5938;
+  font-size:10px;
+  transform:none;
+  filter:none;
+}
+.zaaykaBrand:hover{
+  transform:translateY(-1px);
+  filter:none;
+}
+.zaaykaBrand .brandMark{display:none}
+@media(max-width:600px){
+  .zaaykaBrand{font-size:25px;letter-spacing:-1.4px}
+  .zaaykaBrand:after{right:-11px;font-size:8px}
+}
