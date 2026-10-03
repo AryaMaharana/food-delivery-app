@@ -1,0 +1,3 @@
+package com.fooddelivery.dto;
+import jakarta.validation.constraints.*;
+public class AuthDtos { public record RegisterRequest(@Email @NotBlank String email,@Size(min=6) String password,@NotBlank String fullName,String address,String phoneNumber){} public record LoginRequest(@Email @NotBlank String email,@NotBlank String password){} public record AuthResponse(String token,String email,String fullName,String role){} }
