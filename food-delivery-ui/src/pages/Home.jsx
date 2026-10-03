@@ -54,6 +54,12 @@ export default function Home(){
       </div>
 
       <div className="heroVisual">
+        <div className="heroChef3d" aria-hidden="true">
+          <div className="chefOrbit chefOrbitOne"></div>
+          <div className="chefOrbit chefOrbitTwo"></div>
+          <div className="chef3dBody"><div className="chefHat">👨‍🍳</div><div className="chefPlateMini">🍽️</div></div>
+          <span className="chefSpark chefSparkOne">✦</span><span className="chefSpark chefSparkTwo">✦</span>
+        </div>
         <div className="visualGlow"></div>
         <div className="plateRing ring-one"></div>
         <div className="plateRing ring-two"></div>
