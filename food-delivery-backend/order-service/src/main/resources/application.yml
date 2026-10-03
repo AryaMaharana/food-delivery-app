@@ -1,11 +1,31 @@
-server: { port: 8083 }
+server:
+  port: 8083
+
 spring:
-  application: { name: order-service }
-  datasource: { url: jdbc:postgresql://localhost:5432/fooddelivery, username: fooddelivery, password: fooddelivery }
-  jpa: { hibernate: { ddl-auto: update }, open-in-view: false }
+  application:
+    name: order-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/fooddelivery
+    username: fooddelivery
+    password: fooddelivery
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+
 eureka:
   client:
-    service-url: { defaultZone: http://localhost:8761/eureka/ }
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    metadata-map:
+      module-enabled: "true"
+      module-name: "orders"
+      ui-enabled: "true"
+      ui-label: "My orders"
+      ui-route: "/orders"
+      ui-order: "20"
+
 resilience4j:
   circuitbreaker:
     instances:

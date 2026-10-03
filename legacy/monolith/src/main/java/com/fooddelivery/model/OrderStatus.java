@@ -1,1 +1,0 @@
-package com.fooddelivery.model; public enum OrderStatus { PENDING, PREPARING, READY_FOR_DELIVERY, ON_THE_WAY, DELIVERED, CANCELLED }

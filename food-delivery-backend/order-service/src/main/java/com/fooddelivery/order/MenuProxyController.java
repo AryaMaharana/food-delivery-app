@@ -1,1 +1,0 @@
-package com.fooddelivery.order; import org.springframework.web.bind.annotation.*; import java.math.BigDecimal; @RestController public class MenuProxyController{final RestaurantClient client;MenuProxyController(RestaurantClient c){client=c;} @GetMapping("/api/menu-items/{id}") RestaurantClient.MenuItem item(@PathVariable Long id){return client.getItem(id);}}

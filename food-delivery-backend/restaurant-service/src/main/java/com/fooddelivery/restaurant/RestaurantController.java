@@ -1,1 +1,32 @@
-package com.fooddelivery.restaurant; import org.springframework.web.bind.annotation.*; import java.util.*; @RestController @RequestMapping("/api/restaurants") public class RestaurantController{final RestaurantRepository restaurants;final MenuItemRepository menus; RestaurantController(RestaurantRepository r,MenuItemRepository m){restaurants=r;menus=m;} @GetMapping List<Restaurant> all(){return restaurants.findAll();} @GetMapping("/{id}") Restaurant one(@PathVariable Long id){return restaurants.findById(id).orElseThrow();} @GetMapping("/{id}/menu") List<MenuItem> menu(@PathVariable Long id){return menus.findByRestaurantId(id);}}
+package com.fooddelivery.restaurant;
+
+import org.springframework.web.bind.annotation.*;
+import java.util.*;
+
+@RestController
+@RequestMapping("/restaurants")
+public class RestaurantController {
+
+    final RestaurantRepository restaurants;
+    final MenuItemRepository menus;
+
+    RestaurantController(RestaurantRepository r, MenuItemRepository m) {
+        restaurants = r;
+        menus = m;
+    }
+
+    @GetMapping
+    List<Restaurant> all() {
+        return restaurants.findAll();
+    }
+
+    @GetMapping("/{id}")
+    Restaurant one(@PathVariable Long id) {
+        return restaurants.findById(id).orElseThrow();
+    }
+
+    @GetMapping("/{id}/menu")
+    List<MenuItem> menu(@PathVariable Long id) {
+        return menus.findByRestaurantId(id);
+    }
+}
