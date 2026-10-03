@@ -117,3 +117,18 @@ nav{height:76px;background:rgba(255,248,237,.76);backdrop-filter:blur(20px);-web
   .chefAvatar{width:36px;height:36px;font-size:21px;border-radius:12px}
   .chefBadge b{font-size:9px}.chefBadge small{font-size:7px}
 }
+
+/* Premium 3D ZAAYKA branding + animated chef */
+.zaaykaBrand{position:relative;display:inline-block;font-family:'Playfair Display',serif;font-size:32px;font-weight:800;letter-spacing:3px;color:#fff;transform:perspective(260px) rotateX(10deg) rotateY(-7deg);text-shadow:0 1px 0 #ffe7c5,0 2px 0 #e8b894,0 3px 0 #c97d58,0 5px 0 #a84e32,0 8px 14px rgba(72,31,15,.22);filter:drop-shadow(0 7px 9px rgba(255,89,56,.18));transition:transform .3s ease,filter .3s ease}
+.zaaykaBrand:before{content:'ZAAYKA';position:absolute;inset:0;z-index:-1;transform:translate(3px,4px);color:#ff6a43;opacity:.28}
+.zaaykaBrand:after{content:'';position:absolute;left:4px;right:5px;bottom:-7px;height:7px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,89,56,.28),transparent 70%);transform:perspective(100px) rotateX(65deg);filter:blur(2px)}
+.zaaykaBrand:hover{transform:perspective(260px) rotateX(6deg) rotateY(-2deg) translateY(-2px) scale(1.03);filter:drop-shadow(0 11px 14px rgba(255,89,56,.28))}
+.heroChef3d{position:absolute;z-index:23;left:-5%;bottom:7%;width:112px;height:112px;display:grid;place-items:center;perspective:500px;pointer-events:none;animation:chef3dFloat 5s ease-in-out infinite}
+.chef3dBody{position:relative;width:72px;height:72px;display:grid;place-items:center;border-radius:24px;background:linear-gradient(145deg,#fffdf8,#ffe8ce 55%,#f7b17e);border:1px solid rgba(255,255,255,.9);box-shadow:12px 18px 28px rgba(61,31,13,.2),inset 5px 5px 12px rgba(255,255,255,.9),inset -8px -10px 15px rgba(166,77,38,.14);transform:rotateY(-12deg) rotateX(7deg)}
+.chefHat{position:absolute;top:-17px;font-size:45px;line-height:1;filter:drop-shadow(3px 6px 4px rgba(52,24,9,.22));transform:translateZ(20px)}
+.chefPlateMini{position:absolute;bottom:-9px;right:-11px;width:35px;height:35px;display:grid;place-items:center;border-radius:50%;background:#fff;box-shadow:0 8px 15px rgba(42,25,12,.2);font-size:20px;transform:rotateY(-15deg) translateZ(15px)}
+.chefOrbit{position:absolute;border:1px solid rgba(255,89,56,.28);border-radius:50%;transform:rotateX(67deg) rotateZ(-18deg)}
+.chefOrbitOne{width:108px;height:43px;animation:chefOrbitSpin 6s linear infinite}.chefOrbitTwo{width:88px;height:34px;border-color:rgba(121,92,255,.22);transform:rotateX(67deg) rotateZ(45deg);animation:chefOrbitSpinReverse 8s linear infinite}
+.chefSpark{position:absolute;font-size:13px;color:#ff5938;text-shadow:0 4px 10px rgba(255,89,56,.3)}.chefSparkOne{top:1px;right:3px;animation:sparkFloat 2.5s ease-in-out infinite}.chefSparkTwo{bottom:12px;left:2px;color:#795cff;animation:sparkFloat 2.8s -1.2s ease-in-out infinite}
+@keyframes chef3dFloat{0%,100%{transform:translate3d(0,0,0) rotate(-3deg)}50%{transform:translate3d(8px,-12px,18px) rotate(4deg)}}@keyframes chefOrbitSpin{to{transform:rotateX(67deg) rotateZ(342deg)}}@keyframes chefOrbitSpinReverse{to{transform:rotateX(67deg) rotateZ(-315deg)}}@keyframes sparkFloat{50%{transform:translateY(-7px) scale(1.15);opacity:.65}}
+@media(max-width:850px){.heroChef3d{left:-1%;bottom:5%;transform:scale(.9)}}@media(max-width:600px){.zaaykaBrand{font-size:27px;letter-spacing:2px}.heroChef3d{left:-4%;bottom:4%;transform:scale(.72)}}
