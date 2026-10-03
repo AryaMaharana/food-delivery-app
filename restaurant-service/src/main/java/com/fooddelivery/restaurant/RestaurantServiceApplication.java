@@ -1,0 +1,1 @@
+package com.fooddelivery.restaurant; import org.springframework.boot.SpringApplication; import org.springframework.boot.autoconfigure.SpringBootApplication; @SpringBootApplication public class RestaurantServiceApplication{public static void main(String[] a){SpringApplication.run(RestaurantServiceApplication.class,a);}}
