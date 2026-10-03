@@ -1,0 +1,4 @@
+package com.fooddelivery.model;
+import jakarta.persistence.*; import lombok.*; import java.math.BigDecimal; import java.time.LocalDateTime; import java.util.*;
+@Entity @Table(name="orders") @Getter @Setter @NoArgsConstructor
+public class Order { @Id @GeneratedValue(strategy=GenerationType.IDENTITY) Long id; @ManyToOne User user; @ManyToOne Restaurant restaurant; @OneToMany(mappedBy="order",cascade=CascadeType.ALL) List<OrderItem> items=new ArrayList<>(); BigDecimal totalAmount; @Enumerated(EnumType.STRING) OrderStatus status; LocalDateTime orderTime; String deliveryAddress; String paymentMethod; String paymentId; }
