@@ -2,6 +2,14 @@ import {useEffect,useState} from 'react';
 import {Link} from 'react-router-dom';
 import {restaurants} from '../services/api';
 
+const heroFoods = [
+  {name:'Biryani', image:'https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?auto=format&fit=crop&fm=jpg&q=88&w=1000'},
+  {name:'Desi Thali', image:'https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&fm=jpg&q=88&w=1000'},
+  {name:'Dal Tadka', image:'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&fm=jpg&q=88&w=1000'},
+  {name:'Noodles', image:'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&fm=jpg&q=88&w=1000'},
+  {name:'Pizza', image:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&fm=jpg&q=88&w=1000'},
+];
+
 const foodFloaters = [
   {emoji:'🍕', className:'food-f1'},
   {emoji:'🍜', className:'food-f2'},
@@ -13,7 +21,12 @@ const foodFloaters = [
 
 export default function Home(){
   const [data,setData]=useState([]);
+  const [heroFood,setHeroFood]=useState(0);
   useEffect(()=>{restaurants().then(r=>setData(r.data)).catch(()=>setData([]))},[]);
+  useEffect(()=>{
+    const timer=setInterval(()=>setHeroFood(i=>(i+1)%heroFoods.length),3000);
+    return ()=>clearInterval(timer);
+  },[]);
 
   return <main className="home">
     <section className="hero">
@@ -46,9 +59,11 @@ export default function Home(){
         <div className="plateRing ring-two"></div>
         <div className="heroPlate">
           <div className="plateInner">
-            <img src="https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?auto=format&fit=crop&fm=jpg&q=82&w=1000" alt="Fresh chicken biryani" />
+            <img key={heroFoods[heroFood].name} src={heroFoods[heroFood].image} alt={heroFoods[heroFood].name} />
+            <div className="foodCategoryLabel"><span>Today's craving</span><b>{heroFoods[heroFood].name}</b></div>
           </div>
         </div>
+        <div className="foodDots" aria-label="Food categories">{heroFoods.map((food,i)=><button key={food.name} className={i===heroFood?'active':''} onClick={()=>setHeroFood(i)} aria-label={`Show ${food.name}`}></button>)}</div>
         <div className="floatingCard ratingCard"><span>★</span><div><b>4.9</b><small>loved today</small></div></div>
         <div className="floatingCard deliveryCard"><span>⚡</span><div><b>25 min</b><small>at your door</small></div></div>
         <div className="floatingCard freshCard"><span>🔥</span><div><b>Fresh picks</b><small>near you</small></div></div>
