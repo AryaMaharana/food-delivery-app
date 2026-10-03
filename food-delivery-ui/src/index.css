@@ -32,3 +32,26 @@ nav{height:76px;background:rgba(255,248,237,.76);backdrop-filter:blur(20px);-web
 @keyframes foodImageFloat{0%,100%{transform:scale(1) translateY(0)}50%{transform:scale(1.035) translateY(-4px)}}
 @media(max-width:850px){.greenFoodCard{right:0;bottom:16%;width:145px}.greenFoodCard img{height:70px}}
 @media(max-width:600px){.greenFoodCard{right:-2%;bottom:7%;width:135px}.greenFoodCard img{height:65px}}
+
+/* Rotating hero food categories */
+.plateInner img{animation:heroFoodChange 1.05s cubic-bezier(.2,.8,.2,1) both}
+.foodCategoryLabel{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);min-width:145px;padding:8px 14px;border-radius:999px;background:rgba(24,18,14,.78);backdrop-filter:blur(10px);color:#fff;text-align:center;box-shadow:0 10px 24px rgba(0,0,0,.2);z-index:2}
+.foodCategoryLabel span{display:block;font-size:8px;letter-spacing:1.4px;text-transform:uppercase;opacity:.65;font-weight:700}
+.foodCategoryLabel b{display:block;font-size:13px;margin-top:2px}
+.foodDots{position:absolute;z-index:20;right:7%;top:7%;display:flex;gap:6px;padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.72);backdrop-filter:blur(12px);box-shadow:0 12px 30px rgba(50,30,10,.12)}
+.foodDots button{width:7px;height:7px;padding:0;border:0;border-radius:50%;background:#c9beb2;transition:.3s;cursor:pointer}
+.foodDots button.active{width:20px;border-radius:99px;background:#ff5938}
+@keyframes heroFoodChange{
+  0%{opacity:0;transform:scale(1.18) rotate(-10deg)}
+  45%{opacity:1}
+  100%{opacity:1;transform:scale(1) rotate(0)}
+}
+@media(max-width:850px){
+  .foodDots{right:2%;top:5%}
+  .foodCategoryLabel{bottom:15px}
+}
+@media(max-width:600px){
+  .foodDots{top:2%;right:0}
+  .foodCategoryLabel{bottom:12px;min-width:125px;padding:7px 11px}
+  .foodCategoryLabel b{font-size:11px}
+}
