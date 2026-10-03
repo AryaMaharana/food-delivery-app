@@ -8,10 +8,10 @@
   <packaging>pom</packaging>
   <name>Food Delivery Backend</name>
   <modules>
-    <module>food-delivery-backend/discovery-server</module>
-    <module>food-delivery-backend/api-gateway</module>
-    <module>food-delivery-backend/auth-service</module>
-    <module>food-delivery-backend/restaurant-service</module>
-    <module>food-delivery-backend/order-service</module>
+    <module>discovery-server</module>
+    <module>api-gateway</module>
+    <module>auth-service</module>
+    <module>restaurant-service</module>
+    <module>order-service</module>
   </modules>
 </project>
