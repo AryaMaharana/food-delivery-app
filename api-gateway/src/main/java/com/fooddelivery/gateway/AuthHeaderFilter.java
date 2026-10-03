@@ -1,0 +1,7 @@
+package com.fooddelivery.gateway;
+import io.jsonwebtoken.*; import io.jsonwebtoken.security.Keys; import org.springframework.beans.factory.annotation.Value; import org.springframework.cloud.gateway.filter.GlobalFilter; import org.springframework.core.Ordered; import org.springframework.http.HttpHeaders; import org.springframework.stereotype.Component; import org.springframework.web.server.ServerWebExchange; import reactor.core.publisher.Mono; import java.nio.charset.StandardCharsets;
+@Component public class AuthHeaderFilter implements GlobalFilter, Ordered {
+ private final javax.crypto.SecretKey key; AuthHeaderFilter(@Value("${app.jwt.secret}") String secret){key=Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));}
+ public Mono<Void> filter(ServerWebExchange ex,org.springframework.cloud.gateway.filter.GatewayFilterChain chain){String h=ex.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);if(h!=null&&h.startsWith("Bearer ")){try{String email=Jwts.parser().verifyWith(key).build().parseSignedClaims(h.substring(7)).getPayload().getSubject();var req=ex.getRequest().mutate().header("X-User-Email",email).build();return chain.filter(ex.mutate().request(req).build());}catch(Exception ignored){}}return chain.filter(ex);}
+ public int getOrder(){return -10;}
+}
