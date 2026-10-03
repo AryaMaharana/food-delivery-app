@@ -20,3 +20,15 @@ nav{height:76px;background:rgba(255,248,237,.76);backdrop-filter:blur(20px);-web
 @media(max-width:850px){.hero{height:auto;min-height:1000px;grid-template-columns:1fr;padding:60px 24px 100px}.heroCopy{max-width:650px}.heroVisual{height:500px}.heroPlate{width:330px}.food-floater{display:none}.ring-one{width:400px;height:400px}.ring-two{width:300px;height:300px}.sectionHead{align-items:start;gap:20px}.sectionHead h2{font-size:38px}}
 @media(max-width:600px){nav{height:68px;padding:0 18px}.navlinks>a:not(.ghost):not(.navCta),.userChip{display:none}.hero{min-height:920px;padding:45px 20px 95px}.hero h1{font-size:57px;letter-spacing:-3px}.hero p{font-size:16px}.heroActions{align-items:flex-start;flex-direction:column;gap:16px}.heroStats{gap:20px}.heroStats strong{font-size:18px}.heroVisual{height:400px}.heroPlate{width:280px}.ratingCard{right:0}.freshCard{left:-2%}.deliveryCard{left:2%;bottom:8%}.sectionHead{padding:0 20px;display:block}.count{display:block;margin-top:18px}.grid{padding:0 20px;grid-template-columns:1fr}.restaurantsSection{padding-top:50px}.sectionHead h2{font-size:36px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+
+/* Real food photography layer */
+.plateInner{overflow:hidden;position:relative}
+.plateInner:after{content:'';position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 0 12px rgba(255,255,255,.16),inset 0 -25px 45px rgba(30,20,5,.22);pointer-events:none}
+.plateInner img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.08) contrast(1.04);animation:foodImageFloat 5s ease-in-out infinite}
+.greenFoodCard{position:absolute;right:-2%;bottom:25%;z-index:12;width:170px;padding:8px 8px 10px;border-radius:18px;background:rgba(255,255,255,.88);backdrop-filter:blur(14px);box-shadow:0 22px 45px rgba(30,70,35,.18);transform:rotate(4deg);animation:cardFloat 4.5s ease-in-out infinite -1.5s}
+.greenFoodCard img{width:100%;height:82px;object-fit:cover;border-radius:13px;display:block}
+.greenFoodCard div{display:grid;gap:1px;padding:7px 4px 0}.greenFoodCard b{font-size:12px;color:#175f3d}.greenFoodCard small{font-size:9px;color:#7a817a}
+.greenFoodCard:before{content:'🌿';position:absolute;right:-10px;top:-17px;font-size:25px;transform:rotate(18deg);filter:drop-shadow(0 5px 5px rgba(20,80,35,.15))}
+@keyframes foodImageFloat{0%,100%{transform:scale(1) translateY(0)}50%{transform:scale(1.035) translateY(-4px)}}
+@media(max-width:850px){.greenFoodCard{right:0;bottom:16%;width:145px}.greenFoodCard img{height:70px}}
+@media(max-width:600px){.greenFoodCard{right:-2%;bottom:7%;width:135px}.greenFoodCard img{height:65px}}
