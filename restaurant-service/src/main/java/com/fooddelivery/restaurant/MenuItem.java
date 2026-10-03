@@ -1,0 +1,1 @@
+package com.fooddelivery.restaurant; import jakarta.persistence.*; import lombok.*; import java.math.BigDecimal; @Entity @Getter @Setter @NoArgsConstructor public class MenuItem{@Id @GeneratedValue(strategy=GenerationType.IDENTITY) Long id; String name; String description; BigDecimal price; String imageUrl; boolean available=true; Long restaurantId;}
