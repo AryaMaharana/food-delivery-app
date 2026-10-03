@@ -1,7 +1,7 @@
 services:
   postgres:
     image: postgres:17
-    container_name: food-delivery-postgres
+    container_name: zaayka-postgres
     environment:
       POSTGRES_DB: fooddelivery
       POSTGRES_USER: fooddelivery
@@ -10,5 +10,166 @@ services:
       - "5432:5432"
     volumes:
       - fooddelivery_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fooddelivery -d fooddelivery"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      - zaayka
+
+  discovery-server:
+    build:
+      context: ./food-delivery-backend
+      dockerfile: discovery-server/Dockerfile
+    container_name: zaayka-discovery
+    ports:
+      - "8761:8761"
+    networks:
+      - zaayka
+    restart: unless-stopped
+
+  auth-service:
+    build:
+      context: ./food-delivery-backend
+      dockerfile: auth-service/Dockerfile
+    container_name: zaayka-auth
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/fooddelivery
+      SPRING_DATASOURCE_USERNAME: fooddelivery
+      SPRING_DATASOURCE_PASSWORD: fooddelivery
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka/
+      JWT_SECRET: \${JWT_SECRET:-change-this-local-secret-to-a-long-random-value-123456789}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      discovery-server:
+        condition: service_started
+    ports:
+      - "8081:8081"
+    networks:
+      - zaayka
+    restart: unless-stopped
+
+  restaurant-service:
+    build:
+      context: ./food-delivery-backend
+      dockerfile: restaurant-service/Dockerfile
+    container_name: zaayka-restaurant
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/fooddelivery
+      SPRING_DATASOURCE_USERNAME: fooddelivery
+      SPRING_DATASOURCE_PASSWORD: fooddelivery
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka/
+    depends_on:
+      postgres:
+        condition: service_healthy
+      discovery-server:
+        condition: service_started
+    ports:
+      - "8082:8082"
+    networks:
+      - zaayka
+    restart: unless-stopped
+
+  order-service:
+    build:
+      context: ./food-delivery-backend
+      dockerfile: order-service/Dockerfile
+    container_name: zaayka-order
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/fooddelivery
+      SPRING_DATASOURCE_USERNAME: fooddelivery
+      SPRING_DATASOURCE_PASSWORD: fooddelivery
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka/
+    depends_on:
+      postgres:
+        condition: service_healthy
+      discovery-server:
+        condition: service_started
+      restaurant-service:
+        condition: service_started
+    ports:
+      - "8083:8083"
+    networks:
+      - zaayka
+    restart: unless-stopped
+
+  api-gateway:
+    build:
+      context: ./food-delivery-backend
+      dockerfile: api-gateway/Dockerfile
+    container_name: zaayka-gateway
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka/
+      JWT_SECRET: \${JWT_SECRET:-change-this-local-secret-to-a-long-random-value-123456789}
+    depends_on:
+      discovery-server:
+        condition: service_started
+      auth-service:
+        condition: service_started
+      restaurant-service:
+        condition: service_started
+      order-service:
+        condition: service_started
+    ports:
+      - "8080:8080"
+    networks:
+      - zaayka
+    restart: unless-stopped
+
+  seed:
+    image: postgres:17
+    container_name: zaayka-db-seed
+    environment:
+      PGPASSWORD: fooddelivery
+    volumes:
+      - ./db/sample-data.sql:/seed/sample-data.sql:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+      auth-service:
+        condition: service_started
+      restaurant-service:
+        condition: service_started
+      order-service:
+        condition: service_started
+    entrypoint: ["/bin/sh", "-c"]
+    command: >
+      "until psql -h postgres -U fooddelivery -d fooddelivery -tAc
+      \\"SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='public'
+      AND table_name IN ('users','restaurant','menu_item','orders');\\" | grep -q '^4$';
+      do echo 'Waiting for service tables...'; sleep 3; done;
+      COUNT=$$(psql -h postgres -U fooddelivery -d fooddelivery -tAc
+      \\"SELECT COUNT(*) FROM restaurant;\\");
+      if [ \\"$COUNT\\" = \\"0\\" ]; then
+        echo 'Seeding local test data...';
+        psql -h postgres -U fooddelivery -d fooddelivery -f /seed/sample-data.sql;
+      else
+        echo 'Seed skipped: restaurant data already exists.';
+      fi"
+    networks:
+      - zaayka
+    restart: "no"
+
+  food-delivery-ui:
+    build:
+      context: ./food-delivery-ui
+      args:
+        VITE_API_URL: http://localhost:8080/api
+    container_name: zaayka-ui
+    depends_on:
+      api-gateway:
+        condition: service_started
+    ports:
+      - "5173:80"
+    networks:
+      - zaayka
+    restart: unless-stopped
+
+networks:
+  zaayka:
+    driver: bridge
+
 volumes:
   fooddelivery_pgdata:
