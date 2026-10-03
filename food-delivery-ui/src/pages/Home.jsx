@@ -1,2 +1,70 @@
-import {useEffect,useState} from 'react'; import {Link} from 'react-router-dom'; import {restaurants} from '../services/api';
-export default function Home(){const[data,setData]=useState([]);useEffect(()=>{restaurants().then(r=>setData(r.data)).catch(()=>setData([]))},[]);return <main><section className="hero"><div><span className="pill">Pune's local food, reimagined</span><h1>Crave it.<br/><em>Tap it.</em><br/>Love it.</h1><p>Discover neighbourhood kitchens, comforting classics and quick favourites — all in one beautiful place.</p><Link className="heroBtn" to="#restaurants">Explore restaurants <span>→</span></Link></div><div className="heroArt"><div className="plate">🍛</div><div className="floating f1">🔥 Fresh</div><div className="floating f2">★ 4.8</div></div></section><section id="restaurants" className="sectionHead"><div><span className="eyebrow">HANDPICKED</span><h2>What are you hungry for?</h2></div><span className="count">{data.length} places</span></section><div className="grid">{data.map(r=><Link className="restaurantCard" to={`/restaurant/${r.id}`} key={r.id}><div className="photo"><img src={r.imageUrl}/><span>20–30 min</span></div><div className="restaurantInfo"><h3>{r.name}</h3><p>{r.description}</p><small>● {r.address} · Indian</small></div></Link>)}</div></main>}
+import {useEffect,useState} from 'react';
+import {Link} from 'react-router-dom';
+import {restaurants} from '../services/api';
+
+const foodFloaters = [
+  {emoji:'🍕', className:'food-f1'},
+  {emoji:'🍜', className:'food-f2'},
+  {emoji:'🥟', className:'food-f3'},
+  {emoji:'🍔', className:'food-f4'},
+  {emoji:'🥗', className:'food-f5'},
+  {emoji:'🍰', className:'food-f6'},
+];
+
+export default function Home(){
+  const [data,setData]=useState([]);
+  useEffect(()=>{restaurants().then(r=>setData(r.data)).catch(()=>setData([]))},[]);
+
+  return <main className="home">
+    <section className="hero">
+      <div className="aurora aurora-one"></div>
+      <div className="aurora aurora-two"></div>
+      <div className="aurora aurora-three"></div>
+      <div className="grain"></div>
+      <div className="orb orb-one"></div>
+      <div className="orb orb-two"></div>
+      {foodFloaters.map((f,i)=><span key={i} className={`food-floater ${f.className}`}>{f.emoji}</span>)}
+
+      <div className="heroCopy">
+        <div className="heroBadge"><span className="pulseDot"></span> Pune's food scene, delivered</div>
+        <h1>Good food.<br/><span>Good mood.</span><br/>On repeat.</h1>
+        <p>From late-night cravings to comfort-food classics, discover something delicious and get it at your door.</p>
+        <div className="heroActions">
+          <Link className="heroBtn magnetic" to="#restaurants">Explore food <span>↗</span></Link>
+          <a className="scrollHint" href="#restaurants"><span className="mouseIcon"></span> Scroll to discover</a>
+        </div>
+        <div className="heroStats">
+          <div><strong>4.8<span>★</span></strong><small>average rating</small></div>
+          <div><strong>30<span>+</span></strong><small>local favourites</small></div>
+          <div><strong>25<span>m</span></strong><small>average delivery</small></div>
+        </div>
+      </div>
+
+      <div className="heroVisual">
+        <div className="visualGlow"></div>
+        <div className="plateRing ring-one"></div>
+        <div className="plateRing ring-two"></div>
+        <div className="heroPlate">
+          <div className="plateInner">🍛</div>
+        </div>
+        <div className="floatingCard ratingCard"><span>★</span><div><b>4.9</b><small>loved today</small></div></div>
+        <div className="floatingCard deliveryCard"><span>⚡</span><div><b>25 min</b><small>at your door</small></div></div>
+        <div className="floatingCard freshCard"><span>🔥</span><div><b>Fresh picks</b><small>near you</small></div></div>
+      </div>
+      <div className="heroMarquee"><div><span>FRESHLY MADE</span><i>✦</i><span>LOCAL FAVOURITES</span><i>✦</i><span>FAST DELIVERY</span><i>✦</i><span>FRESHLY MADE</span><i>✦</i><span>LOCAL FAVOURITES</span><i>✦</i></div></div>
+    </section>
+
+    <section id="restaurants" className="restaurantsSection">
+      <div className="sectionHead">
+        <div><span className="eyebrow">CURATED FOR YOU</span><h2>What are you<br/><em>hungry for?</em></h2></div>
+        <span className="count">{data.length} places to explore <b>↘</b></span>
+      </div>
+      <div className="grid">
+        {data.map((r,i)=><Link className="restaurantCard" to={`/restaurant/${r.id}`} key={r.id}>
+          <div className="photo"><img src={r.imageUrl} alt={r.name}/><span>20–30 min</span><div className="cardNumber">0{i+1}</div></div>
+          <div className="restaurantInfo"><div className="cardTop"><h3>{r.name}</h3><b>↗</b></div><p>{r.description}</p><small>● {r.address} · Indian</small></div>
+        </Link>)}
+      </div>
+    </section>
+  </main>
+}
