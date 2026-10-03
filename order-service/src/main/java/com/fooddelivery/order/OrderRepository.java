@@ -1,1 +1,1 @@
-package com.fooddelivery.order; import org.springframework.data.jpa.repository.JpaRepository; import java.util.*; public interface OrderRepository extends JpaRepository<Order,Long>{List<Order> findByCustomerIdOrderByOrderTimeDesc(Long customerId);}
+package com.fooddelivery.order; import org.springframework.data.jpa.repository.JpaRepository; import java.util.*; public interface OrderRepository extends JpaRepository<Order,Long>{List<Order> findByCustomerEmailOrderByOrderTimeDesc(String customerEmail);}
