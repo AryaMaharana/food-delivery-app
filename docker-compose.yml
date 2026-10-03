@@ -135,19 +135,16 @@ services:
       order-service:
         condition: service_started
     entrypoint: ["/bin/sh", "-c"]
-    command: >
-      "until psql -h postgres -U fooddelivery -d fooddelivery -tAc
-      \\"SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='public'
-      AND table_name IN ('users','restaurant','menu_item','orders');\\" | grep -q '^4$';
+    command: >-
+      until psql -h postgres -U fooddelivery -d fooddelivery -tAc "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='public' AND table_name IN ('users','restaurant','menu_item','orders');" | grep -q '^4$';
       do echo 'Waiting for service tables...'; sleep 3; done;
-      COUNT=$$(psql -h postgres -U fooddelivery -d fooddelivery -tAc
-      \\"SELECT COUNT(*) FROM restaurant;\\");
-      if [ \\"$COUNT\\" = \\"0\\" ]; then
+      COUNT=$$(psql -h postgres -U fooddelivery -d fooddelivery -tAc "SELECT COUNT(*) FROM restaurant;");
+      if [ "$$COUNT" = "0" ]; then
         echo 'Seeding local test data...';
         psql -h postgres -U fooddelivery -d fooddelivery -f /seed/sample-data.sql;
       else
         echo 'Seed skipped: restaurant data already exists.';
-      fi"
+      fi
     networks:
       - zaayka
     restart: "no"
