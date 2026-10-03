@@ -10,11 +10,11 @@ DELETE FROM restaurant;
 DELETE FROM users;
 
 INSERT INTO users (id,email,password,full_name,address,phone_number,role) VALUES
-(1,'admin@fooddelivery.local','{BCRYPT_PASSWORD_HASH}','Platform Admin','Pune, Maharashtra','9000000001','ADMIN'),
-(2,'owner@demo.com','{BCRYPT_PASSWORD_HASH}','Spice Garden Owner','Kharadi, Pune','9000000002','RESTAURANT_OWNER'),
-(3,'owner@punekitchen.local','{BCRYPT_PASSWORD_HASH}','Pune Kitchen Owner','Viman Nagar, Pune','9000000003','RESTAURANT_OWNER'),
-(4,'arya.customer@fooddelivery.local','{BCRYPT_PASSWORD_HASH}','Arya Customer','Keshav Nagar, Pune','9000000004','CUSTOMER'),
-(5,'test.customer@fooddelivery.local','{BCRYPT_PASSWORD_HASH}','Test Customer','Viman Nagar, Pune','9000000005','CUSTOMER');
+(1,'admin@fooddelivery.local','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy','Platform Admin','Pune, Maharashtra','9000000001','ADMIN'),
+(2,'owner@demo.com','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy','Spice Garden Owner','Kharadi, Pune','9000000002','RESTAURANT_OWNER'),
+(3,'owner@punekitchen.local','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy','Pune Kitchen Owner','Viman Nagar, Pune','9000000003','RESTAURANT_OWNER'),
+(4,'arya.customer@fooddelivery.local','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy','Arya Customer','Keshav Nagar, Pune','9000000004','CUSTOMER'),
+(5,'test.customer@fooddelivery.local','$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy','Test Customer','Viman Nagar, Pune','9000000005','CUSTOMER');
 
 INSERT INTO restaurant (id,name,description,address,phone_number,image_url) VALUES
 (1,'Spice Garden','Comfort Indian food with biryani, tikkas and fresh breads.','Kharadi, Pune','+91-9000000011','https://images.unsplash.com/photo-1517248135467-4c7edcad34c4'),
