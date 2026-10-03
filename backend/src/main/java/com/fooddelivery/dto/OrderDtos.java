@@ -1,0 +1,2 @@
+package com.fooddelivery.dto;
+import jakarta.validation.constraints.*; import java.util.*; public class OrderDtos { public record ItemRequest(@NotNull Long menuItemId,@Min(1) int quantity){} public record OrderRequest(@NotNull Long restaurantId,@NotEmpty List<ItemRequest> items,@NotBlank String deliveryAddress,@NotBlank String paymentMethod){} }
