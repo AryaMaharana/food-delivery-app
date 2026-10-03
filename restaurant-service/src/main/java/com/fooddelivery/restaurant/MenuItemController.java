@@ -1,0 +1,1 @@
+package com.fooddelivery.restaurant; import org.springframework.web.bind.annotation.*; @RestController @RequestMapping("/api/menu-items") public class MenuItemController{final MenuItemRepository repo; MenuItemController(MenuItemRepository r){repo=r;} @GetMapping("/{id}") MenuItem one(@PathVariable Long id){return repo.findById(id).orElseThrow();}}
